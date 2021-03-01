@@ -2,21 +2,11 @@ library(PortfolioAnalytics)
 library(PerformanceAnalytics)
 library(plyr)
 library(stringr)
-library(reshape2)
-library(ROI)
 library(ggplot2)
 library(plotly)
 library(car)
 library(quantmod)
 library(quadprog)
-require(ROI.plugin.glpk)
-require(ROI.plugin.quadprog)
-library(Rglpk)
-library(fGarch)
-library(nloptr)
-library(knitr)
-library(kableExtra)
-library(pander)
 library(dplyr)
 library(openxlsx)
 options(scipen = 999)
@@ -54,8 +44,8 @@ if (data_source == "Web") {
     filter(
       d,
       TRADING.CODE %in% inst &
-        DATE < base::as.Date("2020-12-31", format = "%Y-%m-%d") &
-        DATE > base::as.Date("2020-01-01", format = "%Y-%m-%d")
+        DATE < base::as.Date(end_date, format = "%Y-%m-%d") &
+        DATE > base::as.Date(start_date, format = "%Y-%m-%d")
     )
 }
 
@@ -72,10 +62,10 @@ portfolio_table[is.na(portfolio_table)] <- 0
 
 # calculate the return series
 return_series <-
-  xts(portfolio_table[, -1], order.by = as.Date(portfolio_table$Date))
+  xts(portfolio_table[,-1], order.by = as.Date(portfolio_table$Date))
 return_series <-
   do.call(cbind, lapply(return_series, function(x)
-    dailyReturn(x, type = "arithmetic")))[-1,]
+    dailyReturn(x, type = "arithmetic")))[-1, ]
 return_series[is.na(return_series)] <- 0
 return_series[!is.finite(return_series)] <- 0
 

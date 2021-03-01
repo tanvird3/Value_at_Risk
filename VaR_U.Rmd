@@ -16,18 +16,11 @@ library(PortfolioAnalytics)
 library(PerformanceAnalytics)
 library(plyr)
 library(stringr)
-library(reshape2)
-library(ROI)
 library(ggplot2)
 library(plotly)
 library(car)
 library(quantmod)
 library(quadprog)
-require(ROI.plugin.glpk)
-require(ROI.plugin.quadprog)
-library(Rglpk)
-library(fGarch)
-library(nloptr)
 library(knitr)
 library(kableExtra)
 library(pander)
@@ -45,7 +38,7 @@ start_date <- as.Date("2020-07-01")
 end_date <- as.Date("2020-12-31")
 
 # set data source
-data_source <- "Web"
+data_source <- "Excel"
 ```
 ## THE CODE
 ```{r, echo = T, warning = FALSE, message = FALSE}
@@ -70,8 +63,8 @@ if (data_source == "Web") {
     filter(
       d,
       TRADING.CODE %in% inst &
-        DATE < base::as.Date("2020-12-31", format = "%Y-%m-%d") &
-        DATE > base::as.Date("2020-01-01", format = "%Y-%m-%d")
+        DATE < base::as.Date(end_date, format = "%Y-%m-%d") &
+        DATE > base::as.Date(start_date, format = "%Y-%m-%d")
     )
 }
 
