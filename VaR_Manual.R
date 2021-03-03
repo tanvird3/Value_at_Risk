@@ -21,7 +21,7 @@ start_date <- as.Date("2020-07-01")
 end_date <- as.Date("2020-12-31")
 
 # set data source
-data_source <- "Excel"
+data_source <- "Web"
 
 # Set the confidence level
 conf_level <- 0.95
