@@ -112,8 +112,8 @@ varcov_matrix <- cov(return_series)
 corr_matrix <- cor(return_series)
 
 # calculate the VaR
-# portfolio standard dev = weight array * varcov matrix * T(weight array) [ W VARCOV W']
-# portfolio mean = weight array * T(average return array) [W AVG_RETURN']
+# portfolio standard dev = [weight array * varcov matrix * T(weight array)]^(1/2) = [ W VARCOV W']^(1/2)
+# portfolio mean = weight array * T(average return array) = [W AVG_RETURN']
 # var percentage = - portfolio mean + portfolio standard dev * Z
 # var = var percentage * portfolio size
 port_std <-
